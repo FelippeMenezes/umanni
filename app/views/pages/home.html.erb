@@ -1,2 +1,8 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container d-flex align-items-center justify-content-center" style="height: 80vh;">
+  <div class="text-center">
+    <h1>Fullstack Developer Test</h1>
+    <p class="lead text-muted mb-4">Welcome to the Fullstack Developer Test application!</p>
+    <%= link_to "Login", new_user_session_path, class: "btn btn-primary btn-lg me-2" %>
+    <%= link_to "Sign up", new_user_registration_path, class: "btn btn-secondary btn-lg" %>
+  </div>
+</div>
