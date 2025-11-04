@@ -19,6 +19,14 @@
     <%= f.input :password_confirmation,
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
+
+    <hr/>
+    <p class="text-muted">Foto de Perfil (opcional)</p>
+    <%= f.input :avatar, as: :file, label: "Anexar um arquivo" %>
+    <p class="text-center my-2">OU</p>
+    <%= f.input :avatar_url,
+                label: "Incluir a partir de uma URL",
+                input_html: { placeholder: "https://exemplo.com/imagem.jpg" } %>
   </div>
 
   <div class="form-actions">
