@@ -9,13 +9,14 @@ class User < ApplicationRecord
   # Atributo virtual para receber a URL da imagem
   attr_accessor :avatar_url
 
-  before_validation :attach_avatar_from_url
+  after_validation :attach_avatar_from_url, if: -> { avatar_url.present? && !avatar.attached? }
+  validate :only_one_avatar_source
 
   private
 
   def attach_avatar_from_url
-    return if avatar_url.blank?
-    return if avatar.attached?
+    # A verificação agora é feita na declaração do callback
+    # return if avatar_url.blank?
 
     require 'open-uri'
 
@@ -25,6 +26,12 @@ class User < ApplicationRecord
     rescue OpenURI::HTTPError, Errno::ENOENT => e
       errors.add(:avatar_url, "não é uma URL de imagem válida")
       Rails.logger.error("Erro ao baixar avatar da URL: #{avatar_url}. Erro: #{e.message}")
+    end
+  end
+
+  def only_one_avatar_source
+    if avatar.present? && avatar_url.present?
+      errors.add(:avatar, "não pode ser enviado junto com uma URL. Por favor, escolha apenas um método.")
     end
   end
 end

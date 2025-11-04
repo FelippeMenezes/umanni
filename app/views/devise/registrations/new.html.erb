@@ -1,37 +1,51 @@
-<h2>Sign up</h2>
+<div class= "container w-50">
+  <h2>Sign up</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :full_name,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "name" } %>
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
+    <div class="form-inputs">
+      <%= f.input :full_name,
+                  required: true,
+                  autofocus: true,
+                  input_html: { autocomplete: "Full name" } %>
+      <%= f.input :email,
+                  required: true,
+                  autofocus: true,
+                  input_html: { autocomplete: "email" } %>
+      <%= f.input :password,
+                  required: true,
+                  hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                  input_html: { autocomplete: "new-password" } %>
+      <%= f.input :password_confirmation,
+                  required: true,
+                  input_html: { autocomplete: "new-password" } %>
 
-    <hr/>
-    <p class="text-muted">Foto de Perfil (opcional)</p>
-    <%= f.input :avatar, as: :file, label: "Anexar um arquivo" %>
-    <p class="text-center my-2">OU</p>
-    <%= f.input :avatar_url,
-                label: "Incluir a partir de uma URL",
-                input_html: { placeholder: "https://exemplo.com/imagem.jpg" } %>
-  </div>
+      <p class="text-muted">Avatar Image (optional)</p>
+      
+      <ul class="nav nav-pills mb-3" id="avatar-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="file-tab" data-bs-toggle="tab" data-bs-target="#file-pane" type="button" role="tab" aria-controls="file-pane" aria-selected="true">Anexar Arquivo</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="url-tab" data-bs-toggle="tab" data-bs-target="#url-pane" type="button" role="tab" aria-controls="url-pane" aria-selected="false">Usar URL</button>
+        </li>
+      </ul>
+      
+      <div class="tab-content" id="avatar-tab-content">
+        <div class="tab-pane fade show active" id="file-pane" role="tabpanel" aria-labelledby="file-tab" tabindex="0">
+          <%= f.input :avatar, as: :file, label: false %>
+        </div>
+        <div class="tab-pane fade" id="url-pane" role="tabpanel" aria-labelledby="url-tab" tabindex="0">
+          <%= f.input :avatar_url, label: false, placeholder: 'https://exemplo.com/imagem.jpg' %>
+        </div>
+      </div>
+    </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
+    <div class="form-actions">
+      <%= f.button :submit, "Sign up" %>
+    </div>
+  <% end %>
 
-<%= render "devise/shared/links" %>
+  <%= render "devise/shared/links" %>
+</div>
