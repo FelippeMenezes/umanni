@@ -1,0 +1,107 @@
+<% content_for :title, "Criar Novo Usuário" %>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-4">
+        <i class="fas fa-user-plus"></i>
+        Criar Novo Usuário
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-edit"></i>
+            Dados do Novo Usuário
+          </h5>
+        </div>
+        <div class="card-body">
+          <%= simple_form_for @user, url: admin_users_path do |f| %>
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.input :full_name, 
+                            label: "Nome Completo",
+                            required: true,
+                            input_html: { class: "form-control" } %>
+              </div>
+              <div class="col-md-6">
+                <%= f.input :email, 
+                            label: "Email",
+                            required: true,
+                            input_html: { class: "form-control" } %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Tipo de Usuário</label>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="roleSwitch" name="user[role]">
+                    <label class="form-check-label" for="roleSwitch">
+                      <span id="roleLabel">Usuário</span>
+                    </label>
+                  </div>
+                  <div class="form-text">Marque para criar um usuário Administrador</div>
+                </div>
+              </div>
+              <div>
+                <div class="col-md-6">
+                  <%= f.input :password,
+                              label: "Senha",
+                              required: true,
+                              input_html: { class: "form-control" } %>
+                </div>
+                <div class="col-md-6">
+                  <%= f.input :password_confirmation,
+                              label: "Confirmar Senha",
+                              required: true,
+                              input_html: { class: "form-control" } %>
+                </div>
+              </div>
+            </div>
+
+
+            <script>
+              document.addEventListener('DOMContentLoaded', function() {
+                const roleSwitch = document.getElementById('roleSwitch');
+                const roleLabel = document.getElementById('roleLabel');
+                
+                roleSwitch.addEventListener('change', function() {
+                  if (this.checked) {
+                    roleLabel.textContent = 'Administrador';
+                    this.value = 'admin';
+                  } else {
+                    roleLabel.textContent = 'Usuário';
+                    this.value = 'user';
+                  }
+                });
+              });
+            </script>
+
+            <div class="row mt-4">
+              <div class="col-12">
+                <div class="d-flex justify-content-between">
+                  <%= link_to admin_users_path, class: "btn btn-outline-secondary" do %>
+                    <i class="fas fa-arrow-left"></i> Voltar à Lista de Usuários
+                  <% end %>
+                  
+                  <div>
+                    <%= link_to admin_dashboard_path, class: "btn btn-outline-primary me-2" do %>
+                      <i class="fas fa-home"></i> Dashboard
+                    <% end %>
+                    <%= f.button :submit, "Criar Usuário", class: "btn btn-success" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
