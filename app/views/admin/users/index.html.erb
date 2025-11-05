@@ -61,11 +61,25 @@
                         <% end %>
                       </td>
                       <td>
-                        <%= link_to edit_admin_user_path(user),
-                                    class: "btn btn-outline-primary btn-sm",
-                                    title: "Edit user #{user.full_name}" do %>
-                          <i class="fas fa-edit"></i> Edit
-                        <% end %>
+                        <div class="d-flex">
+                          <%= link_to edit_admin_user_path(user),
+                                      class: "btn btn-outline-primary btn-sm me-1",
+                                      title: "Edit user #{user.full_name}" do %>
+                            <i class="fas fa-edit"></i> Edit
+                          <% end %>
+                          
+
+                          <%= button_to admin_user_path(user),
+                                        method: :delete,
+                                        class: "btn btn-outline-danger btn-sm",
+                                        title: "Delete user #{user.full_name}",
+                                        data: {
+                                          turbo_confirm: "Are you sure you want to delete #{user.full_name}? This action cannot be undone."
+                                        } do %>
+                            <i class="fas fa-trash-alt"></i> Delete
+                          <% end %>
+
+                        </div>
                       </td>
                     </tr>
                   <% end %>
