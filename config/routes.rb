@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get "dashboard", to: "dashboard#show", as: :dashboard
+    get "users", to: "users#index", as: :users
   end
-
   resources :profiles, only: [:show, :edit, :update, :destroy]
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
