@@ -1,7 +1,7 @@
 <div class= "container w-50">
   <h2>Sign up</h2>
 
-  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: { controller: "avatar" }) do |f| %>
     <%= f.error_notification %>
 
     <div class="form-inputs">
@@ -34,10 +34,10 @@
       
       <div class="tab-content" id="avatar-tab-content">
         <div class="tab-pane fade show active" id="file-pane" role="tabpanel" aria-labelledby="file-tab" tabindex="0">
-          <%= f.input :avatar, as: :file, label: false %>
+          <%= f.input :avatar, as: :file, label: false, input_html: { data: { avatar_target: "fileInput", action: "change->avatar#onFileChange" } } %>
         </div>
         <div class="tab-pane fade" id="url-pane" role="tabpanel" aria-labelledby="url-tab" tabindex="0">
-          <%= f.input :avatar_url, label: false, placeholder: 'https://exemplo.com/imagem.jpg' %>
+          <%= f.input :avatar_url, label: false, placeholder: 'https://exemplo.com/imagem.jpg', input_html: { data: { avatar_target: "urlInput", action: "input->avatar#onUrlInput" } } %>
         </div>
       </div>
     </div>

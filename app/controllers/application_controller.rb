@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if resource.admin?
-      root_path
+      admin_dashboard_path
     else
       profile_path(resource.id)
     end
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_up_path_for(resource)
     if resource.admin?
-      root_path
+      admin_dashboard_path
     else
       profile_path(resource.id)
     end

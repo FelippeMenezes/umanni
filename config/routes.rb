@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root to: "pages#home"
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'registrations' }
+
+  namespace :admin do
+    get "dashboard", to: "dashboard#show", as: :dashboard
+  end
 
   resources :profiles, only: [:show, :edit, :update, :destroy]
   

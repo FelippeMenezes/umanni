@@ -7,7 +7,7 @@
         </div>
         
         <div class="card-body">
-          <%= simple_form_for(@user, url: profile_path(@user), html: { method: :put }) do |f| %>
+          <%= simple_form_for(@user, url: profile_path(@user), html: { method: :put, data: { controller: "avatar" } }) do |f| %>
             <%= f.error_notification %>
             
             <div class="form-group mb-3">
@@ -22,15 +22,23 @@
             </div>
             
             <div class="form-group mb-3">
-              <label>Avatar</label>
-              <div class="row">
-                <div class="col-md-6">
-                  <h6>Enviar arquivo:</h6>
-                  <%= f.file_field :avatar, class: "form-control-file" %>
+              <label>Avatar (opcional)</label>
+
+              <ul class="nav nav-pills mb-3" id="avatar-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="file-tab" data-bs-toggle="tab" data-bs-target="#file-pane" type="button" role="tab" aria-controls="file-pane" aria-selected="true">Anexar Arquivo</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="url-tab" data-bs-toggle="tab" data-bs-target="#url-pane" type="button" role="tab" aria-controls="url-pane" aria-selected="false">Usar URL</button>
+                </li>
+              </ul>
+
+              <div class="tab-content" id="avatar-tab-content">
+                <div class="tab-pane fade show active" id="file-pane" role="tabpanel" aria-labelledby="file-tab" tabindex="0">
+                  <%= f.input :avatar, as: :file, label: false, input_html: { data: { avatar_target: "fileInput", action: "change->avatar#onFileChange" } } %>
                 </div>
-                <div class="col-md-6">
-                  <h6>Ou URL da imagem:</h6>
-                  <%= f.url_field :avatar_url, class: "form-control", placeholder: "https://exemplo.com/imagem.jpg" %>
+                <div class="tab-pane fade" id="url-pane" role="tabpanel" aria-labelledby="url-tab" tabindex="0">
+                  <%= f.input :avatar_url, label: false, placeholder: 'https://exemplo.com/imagem.jpg', input_html: { data: { avatar_target: "urlInput", action: "input->avatar#onUrlInput" } } %>
                 </div>
               </div>
               <small class="form-text text-muted">Escolha apenas uma opção: arquivo ou URL.</small>

@@ -1,0 +1,123 @@
+<% content_for :title, "Dashboard do Administrador" %>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-4">
+        <i class="fas fa-tachometer-alt"></i>
+        Dashboard do Administrador
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card text-white bg-primary shadow">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="card-title">Total de Usuários</h5>
+              <h2 class="mb-0"><%= @user_stats.total_users %></h2>
+            </div>
+            <div class="text-right">
+              <i class="fas fa-users fa-2x"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card text-white bg-warning shadow">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="card-title">Administradores</h5>
+              <h2 class="mb-0"><%= @user_stats.admin_users %></h2>
+              <small>(<%= @user_stats.admin_percentage %>%)</small>
+            </div>
+            <div class="text-right">
+              <i class="fas fa-user-shield fa-2x"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card text-white bg-success shadow">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="card-title">Usuários Comuns</h5>
+              <h2 class="mb-0"><%= @user_stats.regular_users %></h2>
+              <small>(<%= @user_stats.regular_users_percentage %>%)</small>
+            </div>
+            <div class="text-right">
+              <i class="fas fa-user fa-2x"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-chart-pie"></i>
+            Distribuição de Usuários
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="progress mb-3" style="height: 30px;">
+            <div class="progress-bar bg-warning" 
+                 style="width: <%= @user_stats.admin_percentage %>%" 
+                 role="progressbar">
+              <strong>Admins: <%= @user_stats.admin_percentage %>%</strong>
+            </div>
+          </div>
+          <div class="progress" style="height: 30px;">
+            <div class="progress-bar bg-success" 
+                 style="width: <%= @user_stats.regular_users_percentage %>%" 
+                 role="progressbar">
+              <strong>Usuários: <%= @user_stats.regular_users_percentage %>%</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-tools"></i>
+            Ações Rápidas
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= link_to "Voltar ao Início", root_path,
+                          class: "btn btn-outline-secondary btn-block" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <small class="text-muted">
+        <i class="fas fa-clock"></i>
+        Última atualização: <%= l(Time.current, format: :long) %>
+      </small>
+    </div>
+  </div>
+</div>

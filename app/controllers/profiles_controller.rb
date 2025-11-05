@@ -15,7 +15,12 @@ class ProfilesController < ApplicationController
   def update
     redirect_to root_path, alert: "You can only edit your own profile." unless current_user == @user
 
-    if @user.update(profile_params)
+    if profile_params[:avatar_url].present?
+      @user.avatar_url = profile_params[:avatar_url]
+      @user.process_avatar_url
+    end
+
+    if @user.update(profile_params.except(:avatar_url))
       redirect_to profile_path(@user), notice: "Profile updated successfully."
     else
       render :edit, status: :unprocessable_entity
