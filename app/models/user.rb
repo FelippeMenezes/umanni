@@ -5,10 +5,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   
   enum role: { user: 0, admin: 1 }
+  
+  after_initialize :set_default_role, if: :new_record?
+  
+  def set_default_role
+    self.role ||= :user
+  end
 
   has_one_attached :avatar
 
-  # Atributo virtual para receber a URL da imagem
   attr_accessor :avatar_url
 
   after_validation :attach_avatar_from_url, if: -> { avatar_url.present? && !avatar.attached? }
@@ -17,9 +22,6 @@ class User < ApplicationRecord
   private
 
   def attach_avatar_from_url
-    # A verificação agora é feita na declaração do callback
-    # return if avatar_url.blank?
-
     require 'open-uri'
 
     begin
