@@ -48,6 +48,20 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def check_admin_protection
+    if @user == current_user
+      redirect_to admin_users_path, alert: "You cannot delete your own account."
+      return false
+    end
+
+    if @user.admin? && !current_user.admin?
+      redirect_to admin_users_path, alert: "Only admin users can delete other admin users."
+      return false
+    end
+    
+    true
+  end
+
   def set_user
     @user = User.find(params[:id])
   end
