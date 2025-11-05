@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :require_admin
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:edit, :update, :delete]
   
   def index
     @users = User.all.order(created_at: :desc)
@@ -30,6 +30,11 @@ class Admin::UsersController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def delete
+    @user.destroy
+    redirect_to admin_users_path, notice: "User deleted successfully."
   end
 
   private
