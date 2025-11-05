@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :require_admin
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:edit, :update, :delete]
   
   def index
     @users = User.all.order(created_at: :desc)
@@ -32,6 +32,14 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def delete
+    if @user.destroy
+      redirect_to admin_users_path, notice: "User deleted successfully."
+    else
+      redirect_to admin_users_path, alert: "Failed to delete user."
+    end
+  end
+
   private
 
   def require_admin
@@ -45,8 +53,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def user_params
-    # Process role parameter from toggle first
-    # Handle both checked and unchecked states properly
     if params[:user].key?(:role)
       if params[:user][:role] == "admin" || params[:user][:role] == true || params[:user][:role] == "1"
         params[:user][:role] = "admin"
@@ -54,14 +60,10 @@ class Admin::UsersController < ApplicationController
         params[:user][:role] = "user"
       end
     else
-      # If role parameter is missing (checkbox unchecked), default to user
       params[:user][:role] = "user"
     end
     
-    # For existing users, password fields are optional
     permitted_params = [:email, :full_name, :role]
-    
-    # Only include password fields if they're present (for existing users)
     permitted_params << :password if params[:user][:password].present?
     permitted_params << :password_confirmation if params[:user][:password_confirmation].present?
     
