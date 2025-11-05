@@ -31,7 +31,8 @@
                     <th>Role</th>
                     <th>Sign up date</th>
                     <th>Last Sign In</th>
-                    <th>Actions</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,6 +66,22 @@
                                     class: "btn btn-outline-primary btn-sm",
                                     title: "Edit user #{user.full_name}" do %>
                           <i class="fas fa-edit"></i> Edit
+                        <% end %>
+                      </td>
+                                            <td>
+                        <%= form_with url: delete_admin_user_path(user),
+                                      method: :post,
+                                      data: {
+                                        turbo: true,
+                                        turbo_confirm: "Are you sure you want to delete #{user.full_name}?"
+                                      },
+                                      class: "d-inline" do %>
+                          <%= hidden_field_tag :_method, "delete" %>
+                          <button type="submit"
+                                  class="btn btn-outline-danger btn-sm"
+                                  title="Delete user #{user.full_name}">
+                            <i class="fas fa-trash-alt"></i> Delete
+                          </button>
                         <% end %>
                       </td>
                     </tr>
