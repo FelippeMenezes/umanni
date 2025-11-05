@@ -1,7 +1,8 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :require_admin
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :check_admin_protection, only: [:destroy]
   
   def index
     @users = User.all.order(created_at: :desc)
@@ -32,12 +33,34 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def destroy
+    if @user.destroy
+      redirect_to admin_users_path, notice: "User deleted successfully."
+    else
+      redirect_to admin_users_path, alert: "Could not delete user."
+    end
+  end
+
   private
 
   def require_admin
     unless current_user.admin?
       redirect_to root_path, alert: "Access denied. Only administrators can access this area."
     end
+  end
+
+  def check_admin_protection
+    if @user == current_user
+      redirect_to admin_users_path, alert: "You cannot delete your own account."
+      return false
+    end
+
+    if @user.admin? && !current_user.admin?
+      redirect_to admin_users_path, alert: "Only admin users can delete other admin users."
+      return false
+    end
+    
+    true
   end
 
   def set_user
