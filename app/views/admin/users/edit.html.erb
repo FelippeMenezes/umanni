@@ -1,11 +1,11 @@
-<% content_for :title, "Create New User" %>
+<% content_for :title, "Edit User" %>
 
 <div class="container mt-4">
   <div class="row">
     <div class="col-12">
       <h1 class="mb-4">
-        <i class="fas fa-user-plus"></i>
-        Create New User
+        <i class="fas fa-user-edit"></i>
+        Edit User
       </h1>
     </div>
   </div>
@@ -16,23 +16,27 @@
         <div class="card-header">
           <h5 class="card-title mb-0">
             <i class="fas fa-edit"></i>
-            New User Info
+            Edit User Info
           </h5>
         </div>
         <div class="card-body">
-          <%= simple_form_for @user, url: admin_users_path do |f| %>
+          <%= simple_form_for @user, url: admin_user_path(@user), html: { method: :put } do |f| %>
+            <%= f.error_notification %>
+            
             <div class="row">
               <div class="col-md-6">
-                <%= f.input :full_name, 
+                <%= f.input :full_name,
                             label: "Nome Completo",
                             required: true,
                             input_html: { class: "form-control" } %>
               </div>
               <div class="col-md-6">
-                <%= f.input :email, 
+                <%= f.input :email,
                             label: "Email",
                             required: true,
+                            disabled: true,
                             input_html: { class: "form-control" } %>
+                <div class="form-text">Email cannot be changed for existing users.</div>
               </div>
             </div>
 
@@ -41,45 +45,64 @@
                 <div class="mb-3">
                   <label class="form-label">User role</label>
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="roleSwitch" name="user[role]">
+                    <input class="form-check-input" type="checkbox" id="roleSwitch" name="user[role]"
+                           value="admin" <%= 'checked' if @user.admin? %>
+                           <%= 'disabled' if User.where(role: "admin").count <= 1 && @user.admin? %> >
                     <label class="form-check-label" for="roleSwitch">
-                      <span id="roleLabel">User</span>
+                      <span id="roleLabel"><%= @user.admin? ? 'Admin' : 'User' %></span>
                     </label>
                   </div>
-                  <div class="form-text">Check to create an Administrator user</div>
+                  <div class="form-text <%= 'text-warning' if User.where(role: "admin").count <= 1 && @user.admin? %>" id="roleHelpText">
+                    <% if User.where(role: "admin").count <= 1 && @user.admin? %>
+                      <i class="fas fa-exclamation-triangle text-warning"></i> You are the last administrator and cannot change your role.
+                    <% else %>
+                      Check to make this user an Administrator
+                    <% end %>
+                  </div>
                 </div>
               </div>
               <div>
                 <div class="col-md-6">
                   <%= f.input :password,
-                              label: "Senha",
-                              required: true,
-                              input_html: { class: "form-control" } %>
+                              label: "New Password (optional)",
+                              required: false,
+                              input_html: { class: "form-control", autocomplete: "new-password" } %>
                 </div>
                 <div class="col-md-6">
                   <%= f.input :password_confirmation,
-                              label: "Confirmar Senha",
-                              required: true,
-                              input_html: { class: "form-control" } %>
+                              label: "Confirm New Password",
+                              required: false,
+                              input_html: { class: "form-control", autocomplete: "new-password" } %>
                 </div>
               </div>
             </div>
-
 
             <script>
               document.addEventListener('DOMContentLoaded', function() {
                 const roleSwitch = document.getElementById('roleSwitch');
                 const roleLabel = document.getElementById('roleLabel');
+                const roleHelpText = document.getElementById('roleHelpText');
+                const isLastAdmin = <%= User.where(role: "admin").count <= 1 && @user.admin? %>;
                 
                 roleSwitch.addEventListener('change', function() {
                   if (this.checked) {
                     roleLabel.textContent = 'Admin';
                     this.value = 'admin';
+                    roleHelpText.textContent = 'Check to make this user an Administrator';
+                    roleHelpText.className = 'form-text';
                   } else {
                     roleLabel.textContent = 'User';
                     this.value = 'user';
+                    roleHelpText.textContent = 'Check to make this user an Administrator';
+                    roleHelpText.className = 'form-text';
                   }
                 });
+                
+                if (isLastAdmin) {
+                  roleSwitch.disabled = true;
+                  roleHelpText.innerHTML = '<i class="fas fa-exclamation-triangle text-warning"></i> You are the last administrator and cannot change your role.';
+                  roleHelpText.className = 'form-text text-warning';
+                }
               });
             </script>
 
@@ -94,7 +117,7 @@
                     <%= link_to admin_dashboard_path, class: "btn btn-outline-primary me-2" do %>
                       <i class="fas fa-home"></i> Dashboard
                     <% end %>
-                    <%= f.button :submit, "Create User", class: "btn btn-success" %>
+                    <%= f.button :submit, "Update User", class: "btn btn-success" %>
                   </div>
                 </div>
               </div>

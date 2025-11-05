@@ -10,7 +10,7 @@ class Admin::DashboardController < ApplicationController
 
   def require_admin
     unless current_user.admin?
-      redirect_to root_path, alert: "Acesso negado. Apenas administradores podem acessar esta área."
+      redirect_to root_path, alert: "Access denied. Only administrators can access this area."
     end
   end
 end

@@ -1,11 +1,11 @@
-<% content_for :title, "Dashboard do Administrador" %>
+<% content_for :title, "Admin Dashboard" %>
 
 <div class="container mt-4">
   <div class="row">
     <div class="col-12">
       <h1 class="mb-4">
         <i class="fas fa-tachometer-alt"></i>
-        Dashboard do Administrador
+        Admin Dashboard
       </h1>
     </div>
   </div>
@@ -16,7 +16,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
             <div>
-              <h5 class="card-title">Total de Usuários</h5>
+              <h5 class="card-title">Total Users</h5>
               <h2 class="mb-0"><%= @user_stats.total_users %></h2>
               <small>( 100%) </small>
             </div>
@@ -33,7 +33,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
             <div>
-              <h5 class="card-title">Administradores</h5>
+              <h5 class="card-title">Admin</h5>
               <h2 class="mb-0"><%= @user_stats.admin_users %></h2>
               <small>(<%= @user_stats.admin_percentage %>%)</small>
             </div>
@@ -50,7 +50,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
             <div>
-              <h5 class="card-title">Usuários Comuns</h5>
+              <h5 class="card-title">Regular Users</h5>
               <h2 class="mb-0"><%= @user_stats.regular_users %></h2>
               <small>(<%= @user_stats.regular_users_percentage %>%)</small>
             </div>
@@ -69,7 +69,7 @@
         <div class="card-header">
           <h5 class="card-title mb-0">
             <i class="fas fa-chart-pie"></i>
-            Distribuição de Usuários
+            User Distribution
           </h5>
         </div>
         <div class="card-body">
@@ -84,7 +84,7 @@
             <div class="progress-bar bg-success" 
                  style="width: <%= @user_stats.regular_users_percentage %>%" 
                  role="progressbar">
-              <strong>Usuários: <%= @user_stats.regular_users_percentage %>%</strong>
+              <strong>Users: <%= @user_stats.regular_users_percentage %>%</strong>
             </div>
           </div>
         </div>
@@ -98,19 +98,19 @@
         <div class="card-header">
           <h5 class="card-title mb-0">
             <i class="fas fa-tools"></i>
-            Ações Rápidas
+            Actions
           </h5>
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col-md-4 mb-3">
               <%= link_to admin_users_path, class: "btn btn-info btn-block" do %>
-                <i class="fas fa-list"></i> Listar Todos os Usuários
+                <i class="fas fa-list"></i> List All Users
               <% end %>
             </div>
             <div class="col-md-4 mb-3">
               <%= link_to new_admin_user_path, class: "btn btn-success btn-block" do %>
-                <i class="fas fa-user-plus"></i> Criar Novo Usuário
+                <i class="fas fa-user-plus"></i> Create New User
               <% end %>
             </div>
           </div>
