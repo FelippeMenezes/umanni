@@ -75,30 +75,3 @@ Certifique-se de que você tem o seguinte instalado:
         ```
 
 Acesse a aplicação em `http://localhost:3000`.
-
-## 🗺️ Roadmap: Atendendo a Todos os Requisitos do Projeto
-
-Este projeto implementa com sucesso as funcionalidades principais solicitadas no teste. Os pontos a seguir descrevem os próximos passos para atender completamente a todos os requisitos e adicionar melhorias.
-
-### ⏳ A Fazer
-
-1.  **Implementar Dashboard e Progresso de Importação em Tempo Real**
-    -   **Requisito**: "Você deve usar coisas relacionadas a tempo real (contadores no Dashboard Admin, progresso da importação, etc.)" e "Como Admin, devo ser capaz de ver o progresso da importação de Usuários."
-    -   **Status Atual**: As estatísticas do dashboard são carregadas na renderização da página, e o feedback da importação CSV é fornecido apenas após o término do processo.
-    -   **Próximo Passo**: Integrar **Action Cable** ou uma solução similar com WebSockets para atualizar os contadores do dashboard em tempo real e exibir uma barra de progresso ao vivo durante as importações de CSV.
-
-2.  **Atingir 90% de Cobertura de Testes**
-    -   **Requisito**: "Testes com pelo menos 90% de cobertura".
-    -   **Status Atual**: O projeto inclui uma base sólida de testes de modelo, controller e sistema com Capybara.
-    -   **Próximo Passo**: Gerar um relatório de cobertura de testes (ex: com a gem SimpleCov), escrever testes adicionais para cobrir as lacunas e garantir que a meta de 90% seja atingida.
-
-3.  **Melhorar o Gerenciamento de Papéis (Roles)**
-    -   **Requisito**: "Como Admin, devo ser capaz de alternar o Papel do Usuário."
-    -   **Status Atual**: O papel do usuário pode ser alterado através do formulário de "Editar Usuário".
-    -   **Próximo Passo**: Implementar um botão "alternar papel" mais intuitivo, com um clique, diretamente na lista de usuários no painel de administração para uma melhor experiência do usuário.
-
-### ⭐ Pontos Extras (Melhorias Futuras)
-
--   **Introduzir Componentes React**: Para elementos altamente interativos, como a barra de progresso da importação ou um widget de dashboard com atualização ao vivo, introduzir React pode proporcionar uma experiência de usuário mais rica.
--   **Adicionar Testes de Estresse**: Implementar testes de estresse (ex: com uma ferramenta como k6) para avaliar a performance da aplicação e garantir que ela suporte uma alta carga de acessos.
--   **Suporte a Navegadores**: Realizar testes abrangentes em Edge, Chrome, Firefox e Safari para garantir a compatibilidade entre diferentes navegadores.
