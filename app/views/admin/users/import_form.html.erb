@@ -1,0 +1,37 @@
+<% content_for :title, "Importar Usuários" %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header">
+          <h1 class="card-title mb-0">
+            <i class="fas fa-file-import"></i>
+            Importar Usuários
+          </h1>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-info">
+            <h6><i class="fas fa-info-circle"></i> Instruções para Importação:</h6>
+            <ul class="mb-2">
+              <li><strong>Colunas obrigatórias:</strong> full_name, email</li>
+              <li><strong>Coluna opcional:</strong> role ('admin' ou 'user', padrão: 'user')</li>
+              <li><strong>Coluna opcional:</strong> password (se não fornecida, uma senha aleatória será gerada)</li>
+              <li><strong>Formato do arquivo:</strong> CSV com encoding UTF-8</li>
+            </ul>
+            <p class="mb-0"><small>Baixe o <a href="/example_users.csv" download>arquivo de exemplo</a> para ver o formato correto.</small></p>
+          </div>
+
+          <%= form_tag import_admin_users_path, multipart: true, class: "mt-4" do %>
+            <div class="form-group">
+              <%= file_field_tag :file, class: "form-control-file", required: true, accept: ".csv" %>
+            </div>
+
+            <%= submit_tag "Importar", class: "btn btn-primary" %>
+            <%= link_to "Cancelar", admin_dashboard_path, class: "btn btn-secondary" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
