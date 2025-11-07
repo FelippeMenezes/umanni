@@ -4,12 +4,10 @@ class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
-    # Lógica para listar usuários
     @users = User.all
   end
 
   def edit
-    # Ação de edição já deve existir
   end
 
   def update
@@ -21,9 +19,7 @@ class Admin::UsersController < ApplicationController
       render :edit
     end
   end
-
-  # ... outras ações como new, create, destroy
-
+  
   private
 
   def set_user
