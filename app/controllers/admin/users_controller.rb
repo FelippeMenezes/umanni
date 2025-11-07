@@ -27,7 +27,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    # Remove avatar_url dos parâmetros para evitar que seja passado para o `update` do modelo
     params_for_update = user_params.except(:avatar_url)
 
     if @user.update(params_for_update)
@@ -166,11 +165,8 @@ class Admin::UsersController < ApplicationController
   end
 
   def user_params
-    # Anexa o avatar da URL antes de validar os parâmetros
     attach_avatar_from_url
 
-    # Se o parâmetro 'role' não for enviado (ex: campo desabilitado para o último admin),
-    # não altere a role. Se for enviado, normalize o valor.
     if params.dig(:user, :role).present?
       if ['admin', 1, '1'].include?(params.dig(:user, :role))
         params[:user][:role] = 'admin'
