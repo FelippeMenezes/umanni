@@ -3,4 +3,20 @@
   bottom: 16px;
   right: 16px;
   z-index: 1000;
+  max-width: 400px;
+  word-wrap: break-word;
+  
+  &.alert-danger {
+    max-height: 300px;
+    overflow-y: auto;
+    
+    > div {
+      padding: 2px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
 }

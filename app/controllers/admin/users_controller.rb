@@ -106,9 +106,9 @@ class Admin::UsersController < ApplicationController
       success_message = "#{success_count} user#{'s' if success_count != 1} imported#{'s' if success_count != 1} successfully."
 
       if error_messages.any?
-        redirect_to admin_users_path, 
-          notice: success_message, 
-          alert: error_messages.join("<br>").html_safe
+        redirect_to admin_users_path,
+          notice: success_message,
+          alert: error_messages.join("\n")
       else
         redirect_to admin_users_path, notice: success_message
       end

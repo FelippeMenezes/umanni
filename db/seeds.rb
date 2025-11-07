@@ -8,6 +8,12 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+puts "Cleaning database..."
+
+User.destroy_all
+
+puts "Creating default users..."
+
 User.create!(
   email: "admin@example.com",
   password: "password123",
@@ -23,3 +29,5 @@ User.create!(
     role: :user
   )
 end
+
+puts "#{User.count} users created."
