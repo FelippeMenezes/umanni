@@ -7,3 +7,9 @@
 body {
   padding-top: 65px;
 }
+
+@media (max-width: 499px) {
+  .d-md-table-cell {
+    display: none !important;
+  }
+}
