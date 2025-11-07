@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   require 'csv'
+  require 'open-uri'
   before_action :authenticate_user!
   before_action :require_admin
   before_action :set_user, only: [:edit, :update, :delete]
@@ -26,7 +27,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    # Remove avatar_url dos parâmetros para evitar que seja passado para o `update` do modelo
+    params_for_update = user_params.except(:avatar_url)
+
+    if @user.update(params_for_update)
       redirect_to admin_users_path, notice: "User updated successfully."
     else
       render :edit, status: :unprocessable_entity
@@ -125,6 +129,15 @@ class Admin::UsersController < ApplicationController
   
   private
   
+  def attach_avatar_from_url
+    return if params.dig(:user, :avatar_url).blank?
+
+    downloaded_image = URI.open(params[:user][:avatar_url])
+    @user.avatar.attach(io: downloaded_image, filename: "avatar_from_url.jpg")
+  rescue StandardError => e
+    Rails.logger.error "Failed to download avatar from URL: #{params[:user][:avatar_url]}. Error: #{e.message}"
+  end
+
   def validate_role(role_value)
     return "user" unless role_value.present?
     
@@ -153,18 +166,21 @@ class Admin::UsersController < ApplicationController
   end
 
   def user_params
-    if params[:user].key?(:role)
-      role_value = params[:user][:role]
-      if role_value.present? && (role_value == "admin" || role_value == 1 || role_value == "1")
-        params[:user][:role] = "admin"
+    # Anexa o avatar da URL antes de validar os parâmetros
+    attach_avatar_from_url
+
+    # Se o parâmetro 'role' não for enviado (ex: campo desabilitado para o último admin),
+    # não altere a role. Se for enviado, normalize o valor.
+    if params.dig(:user, :role).present?
+      if ['admin', 1, '1'].include?(params.dig(:user, :role))
+        params[:user][:role] = 'admin'
       else
-        params[:user][:role] = "user"
+        params[:user][:role] = 'user'
       end
     end
-    params[:user][:role] ||= "user"
-    
-    permitted_params = [:email, :full_name, :role]
-    
+
+    permitted_params = [:email, :full_name, :role, :avatar, :avatar_url]
+
     permitted_params << :password if params[:user][:password].present?
     permitted_params << :password_confirmation if params[:user][:password_confirmation].present?
     
