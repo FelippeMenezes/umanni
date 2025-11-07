@@ -1,4 +1,4 @@
-<% content_for :title, "Importar Usuários" %>
+<% content_for :title, "Import Users" %>
 
 <div class="container mt-4">
   <div class="row justify-content-center">
@@ -7,29 +7,29 @@
         <div class="card-header">
           <h1 class="card-title mb-0">
             <i class="fas fa-file-import"></i>
-            Importar Usuários
+            Import Users
           </h1>
         </div>
         <div class="card-body">
 
           <%= form_tag import_admin_users_path, multipart: true, class: "mt-4" do %>
-            <div class="form">
-              <%= file_field_tag :file, class: "form-control-file", required: true, accept: ".csv" %>
+            <div class="form-group">
+              <%= file_field_tag :file, class: "form-control mb-3", required: true, accept: ".csv" %>
             </div>
 
-            <%= submit_tag "Importar", class: "btn btn-primary" %>
-            <%= link_to "Cancelar", admin_dashboard_path, class: "btn btn-secondary" %>
+            <%= submit_tag "Import", class: "btn btn-primary" %>
+            <%= link_to "Cancel", admin_dashboard_path, class: "btn btn-secondary" %>
           <% end %>
         </div>
           <div class="card-footer bg-light">
-            <h6><i class="fas fa-info-circle"></i> Instruções para Importação:</h6>
+            <h6><i class="fas fa-info-circle"></i> Import Instructions:</h6>
             <ul class="mb-2">
-              <li><strong>Colunas obrigatórias:</strong> full_name, email</li>
-              <li><strong>Coluna opcional:</strong> role ('admin' ou 'user', padrão: 'user')</li>
-              <li><strong>Coluna opcional:</strong> password (se não fornecida, uma senha aleatória será gerada)</li>
-              <li><strong>Formato do arquivo:</strong> CSV com encoding UTF-8</li>
+              <li><strong>Required columns:</strong> full_name, email</li>
+              <li><strong>Optional column:</strong> role ('admin' or 'user', default: 'user')</li>
+              <li><strong>Optional column:</strong> password (if not provided, a random password will be generated)</li>
+              <li><strong>File format:</strong> CSV with UTF-8 encoding</li>
             </ul>
-            <p class="mb-0"><small>Baixe o <a href="/example_users.csv" download>arquivo de exemplo</a> para ver o formato correto.</small></p>
+            <p class="mb-0"><small>Download the <a href="/example_users.csv" download>example file</a> to see the correct format.</small></p>
           </div>
       </div>
     </div>
