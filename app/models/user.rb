@@ -34,7 +34,7 @@ class User < ApplicationRecord
       content_type = downloaded_image.content_type
 
       unless content_type.start_with?('image/')
-        errors.add(:avatar_url, "deve ser uma URL de imagem válida (JPEG, PNG, GIF, etc.)")
+        errors.add(:avatar_url, "should be a valid image URL (JPEG, PNG, GIF, etc.)")
         return
       end
 
@@ -50,20 +50,20 @@ class User < ApplicationRecord
       self.avatar.attach(io: downloaded_image, filename: filename, content_type: content_type)
 
     rescue OpenURI::HTTPError => e
-      errors.add(:avatar_url, "não foi possível acessar a URL. Verifique se a URL está correta e acessível.")
-      Rails.logger.error("Erro HTTP ao baixar avatar da URL: #{avatar_url}. Status: #{e.message}")
+      errors.add(:avatar_url, "could not access the URL. Please check if the URL is correct and accessible.")
+      Rails.logger.error("HTTP error while downloading avatar from URL: #{avatar_url}. Status: #{e.message}")
     rescue Errno::ENOENT, SocketError => e
-      errors.add(:avatar_url, "URL inválida ou inacessível.")
-      Rails.logger.error("Erro de rede ao baixar avatar da URL: #{avatar_url}. Erro: #{e.message}")
+      errors.add(:avatar_url, "invalid or inaccessible URL.")
+      Rails.logger.error("Network error while downloading avatar from URL: #{avatar_url}. Error: #{e.message}")
     rescue => e
-      errors.add(:avatar_url, "erro ao processar a imagem da URL.")
-      Rails.logger.error("Erro inesperado ao baixar avatar da URL: #{avatar_url}. Erro: #{e.message}")
+      errors.add(:avatar_url, "error processing image from URL.")
+      Rails.logger.error("Unexpected error while downloading avatar from URL: #{avatar_url}. Error: #{e.message}")
     end
   end
 
   def only_one_avatar_source
     if avatar.present? && avatar_url.present? && !avatar.attached?
-      errors.add(:avatar, "não pode ser enviado junto com uma URL. Por favor, escolha apenas um método.")
+      errors.add(:avatar, "cannot be submitted along with a URL. Please choose only one method.")
     end
   end
 end

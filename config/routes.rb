@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     end
   end
   
-  # Rota para download do arquivo de exemplo
   get "/example_users.csv", to: "admin/users#download_example", as: :download_example_users
   resources :profiles, only: [:show, :edit, :update, :destroy]
   

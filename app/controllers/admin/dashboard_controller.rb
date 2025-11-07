@@ -6,10 +6,6 @@ class Admin::DashboardController < ApplicationController
     @user_stats = UserStats.new
   end
 
-  def import
-    # Logic for importing users goes here
-  end
-
   private
 
   def require_admin
