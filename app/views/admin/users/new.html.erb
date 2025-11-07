@@ -41,45 +41,41 @@
                 <div class="mb-3">
                   <label class="form-label">User role</label>
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="roleSwitch" name="user[role]">
-                    <label class="form-check-label" for="roleSwitch">
+                    <%= f.check_box :role, { class: "form-check-input", id: "roleSwitch", checked: false }, "admin", "user" %>
+                    <label class="form-check-label" for="user_role">
                       <span id="roleLabel">User</span>
                     </label>
                   </div>
                   <div class="form-text">Check to create an Administrator user</div>
                 </div>
               </div>
-              <div>
-                <div class="col-md-6">
-                  <%= f.input :password,
-                              label: "Senha",
-                              required: true,
-                              input_html: { class: "form-control" } %>
-                </div>
-                <div class="col-md-6">
-                  <%= f.input :password_confirmation,
-                              label: "Confirmar Senha",
-                              required: true,
-                              input_html: { class: "form-control" } %>
-                </div>
+              <div class="col-md-6">
+                <%= f.input :password,
+                            label: "Senha",
+                            required: true,
+                            input_html: { class: "form-control" } %>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.input :password_confirmation,
+                            label: "Confirmar Senha",
+                            required: true,
+                            input_html: { class: "form-control" } %>
               </div>
             </div>
 
-
             <script>
               document.addEventListener('DOMContentLoaded', function() {
-                const roleSwitch = document.getElementById('roleSwitch');
+                const roleSwitch = document.getElementById('user_role');
                 const roleLabel = document.getElementById('roleLabel');
                 
-                roleSwitch.addEventListener('change', function() {
-                  if (this.checked) {
-                    roleLabel.textContent = 'Admin';
-                    this.value = 'admin';
-                  } else {
-                    roleLabel.textContent = 'User';
-                    this.value = 'user';
-                  }
-                });
+                if (roleSwitch && roleLabel) {
+                  roleSwitch.addEventListener('change', function() {
+                    roleLabel.textContent = this.checked ? 'Admin' : 'User';
+                  });
+                }
               });
             </script>
 

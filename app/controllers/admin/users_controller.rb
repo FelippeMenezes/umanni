@@ -154,14 +154,14 @@ class Admin::UsersController < ApplicationController
 
   def user_params
     if params[:user].key?(:role)
-      if params[:user][:role] == "admin" || params[:user][:role] == true || params[:user][:role] == "1"
+      role_value = params[:user][:role]
+      if role_value.present? && (role_value == "admin" || role_value == 1 || role_value == "1")
         params[:user][:role] = "admin"
       else
         params[:user][:role] = "user"
       end
-    else
-      params[:user][:role] = "user"
     end
+    params[:user][:role] ||= "user"
     
     permitted_params = [:email, :full_name, :role]
     
