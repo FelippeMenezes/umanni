@@ -40,6 +40,37 @@
               </div>
             </div>
 
+            <div>
+              <% if @user.avatar.attached? %>
+                <%= image_tag @user.avatar, class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+              <% else %>
+                <%= image_tag "https://emojicdn.elk.sh/👤", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+              <% end %>
+
+              <div class="form-group mb-3">
+                <label>Avatar (opcional)</label>
+
+                <ul class="nav nav-pills mb-3" id="avatar-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="file-tab" data-bs-toggle="tab" data-bs-target="#file-pane" type="button" role="tab" aria-controls="file-pane" aria-selected="true">Anexar Arquivo</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="url-tab" data-bs-toggle="tab" data-bs-target="#url-pane" type="button" role="tab" aria-controls="url-pane" aria-selected="false">Usar URL</button>
+                  </li>
+                </ul>
+
+                <div class="tab-content" id="avatar-tab-content">
+                  <div class="tab-pane fade show active" id="file-pane" role="tabpanel" aria-labelledby="file-tab" tabindex="0">
+                    <%= f.input :avatar, as: :file, label: false, input_html: { id: "avatar-file-input", data: { avatar_target: "fileInput", action: "change->avatar#onFileChange" } } %>
+                  </div>
+                  <div class="tab-pane fade" id="url-pane" role="tabpanel" aria-labelledby="url-tab" tabindex="0">
+                    <%= f.input :avatar_url, label: false, placeholder: 'https://exemplo.com/imagem.jpg', input_html: { id: "avatar-url-input", data: { avatar_target: "urlInput", action: "input->avatar#onUrlInput" } } %>
+                  </div>
+                </div>
+                <small class="form-text text-muted">Escolha apenas uma opção: arquivo ou URL.</small>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-md-6">
                 <div class="mb-3">
@@ -83,6 +114,10 @@
                 const roleLabel = document.getElementById('roleLabel');
                 const roleHelpText = document.getElementById('roleHelpText');
                 const isLastAdmin = <%= User.where(role: "admin").count <= 1 && @user.admin? %>;
+
+                const fileInput = document.getElementById('avatar-file-input');
+                const urlInput = document.getElementById('avatar-url-input');
+                const fileTab = document.getElementById('file-tab');
                 
                 roleSwitch.addEventListener('change', function() {
                   if (this.checked) {
@@ -103,6 +138,20 @@
                   roleHelpText.innerHTML = '<i class="fas fa-exclamation-triangle text-warning"></i> You are the last administrator and cannot change your role.';
                   roleHelpText.className = 'form-text text-warning';
                 }
+
+                function toggleAvatarInputs() {
+                  if (fileTab.classList.contains('active')) {
+                    urlInput.value = '';
+                    urlInput.disabled = true;
+                    fileInput.disabled = false;
+                  } else {
+                    fileInput.value = '';
+                    fileInput.disabled = true;
+                    urlInput.disabled = false;
+                  }
+                }
+                document.querySelectorAll('#avatar-tab button').forEach(tab => tab.addEventListener('shown.bs.tab', toggleAvatarInputs));
+                toggleAvatarInputs();
               });
             </script>
 
