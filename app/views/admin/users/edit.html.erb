@@ -86,8 +86,6 @@
                   <div class="form-text <%= 'text-warning' if User.where(role: "admin").count <= 1 && @user.admin? %>" id="roleHelpText">
                     <% if User.where(role: "admin").count <= 1 && @user.admin? %>
                       <i class="fas fa-exclamation-triangle text-warning"></i> You are the last administrator and cannot change your role.
-                    <% else %>
-                      Check to make this user an Administrator
                     <% end %>
                   </div>
                 </div>
