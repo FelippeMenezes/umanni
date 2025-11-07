@@ -11,7 +11,17 @@
           </h1>
         </div>
         <div class="card-body">
-          <div class="alert alert-info">
+
+          <%= form_tag import_admin_users_path, multipart: true, class: "mt-4" do %>
+            <div class="form">
+              <%= file_field_tag :file, class: "form-control-file", required: true, accept: ".csv" %>
+            </div>
+
+            <%= submit_tag "Importar", class: "btn btn-primary" %>
+            <%= link_to "Cancelar", admin_dashboard_path, class: "btn btn-secondary" %>
+          <% end %>
+        </div>
+          <div class="card-footer bg-light">
             <h6><i class="fas fa-info-circle"></i> Instruções para Importação:</h6>
             <ul class="mb-2">
               <li><strong>Colunas obrigatórias:</strong> full_name, email</li>
@@ -21,16 +31,6 @@
             </ul>
             <p class="mb-0"><small>Baixe o <a href="/example_users.csv" download>arquivo de exemplo</a> para ver o formato correto.</small></p>
           </div>
-
-          <%= form_tag import_admin_users_path, multipart: true, class: "mt-4" do %>
-            <div class="form-group">
-              <%= file_field_tag :file, class: "form-control-file", required: true, accept: ".csv" %>
-            </div>
-
-            <%= submit_tag "Importar", class: "btn btn-primary" %>
-            <%= link_to "Cancelar", admin_dashboard_path, class: "btn btn-secondary" %>
-          <% end %>
-        </div>
       </div>
     </div>
   </div>
