@@ -5,8 +5,14 @@
   </div>
 <% end %>
 <% if alert %>
-  <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
-    <%= alert %>
+  <div class="alert alert-danger alert-dismissible fade show m-1" role="alert" style="max-width: 400px; word-wrap: break-word;">
+    <% if alert.include?("\n") %>
+      <% alert.split("\n").each do |line| %>
+        <div><%= line %></div>
+      <% end %>
+    <% else %>
+      <%= alert %>
+    <% end %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 <% end %>
