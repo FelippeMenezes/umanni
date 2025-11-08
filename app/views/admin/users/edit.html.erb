@@ -75,6 +75,9 @@
               <div class="col-md-6">
                 <div class="mb-3">
                   <label class="form-label">User role</label>
+                  <% unless User.where(role: "admin").count <= 1 && @user.admin? %>
+                    <input type="hidden" name="user[role]" value="user">
+                  <% end %>
                   <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="roleSwitch" name="user[role]"
                            value="admin" <%= 'checked' if @user.admin? %>
@@ -90,6 +93,7 @@
                   </div>
                 </div>
               </div>
+              
               <div>
                 <div class="col-md-6">
                   <%= f.input :password,

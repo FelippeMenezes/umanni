@@ -167,6 +167,8 @@ class Admin::UsersController < ApplicationController
   def user_params
     attach_avatar_from_url
 
+    params[:user][:role] ||= @user.role
+
     if params.dig(:user, :role).present?
       if ['admin', 1, '1'].include?(params.dig(:user, :role))
         params[:user][:role] = 'admin'
@@ -179,7 +181,7 @@ class Admin::UsersController < ApplicationController
 
     permitted_params << :password if params[:user][:password].present?
     permitted_params << :password_confirmation if params[:user][:password_confirmation].present?
-    
+
     params.require(:user).permit(*permitted_params)
   end
 end
