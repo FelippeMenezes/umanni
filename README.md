@@ -32,6 +32,11 @@ O Umani é uma aplicação web full-stack construída com **Ruby on Rails 7** pa
 
 ### Pré-requisitos
 
+Log in credentials:
+-   Admin   email: "admin@example.com"  password: "password123"
+-   User    email: "user5@example.com"  password: "password123"
+
+
 Certifique-se de que você tem o seguinte instalado:
 -   Ruby `3.1.4`
 -   Rails `7.1.5`
