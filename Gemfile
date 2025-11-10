@@ -15,7 +15,7 @@ gem "bootstrap", "~> 5.3.3"
 gem "sassc-rails"
 gem "devise"
 gem "simple_form"
-
+gem "autoprefixer-rails"
 group :development, :test do
   gem "debug", platforms: [:mri, :windows]
 end
