@@ -82,6 +82,8 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    autoprefixer-rails (10.4.21.0)
+      execjs (~> 2)
     base64 (0.3.0)
     bcrypt (3.1.20)
     benchmark (0.5.0)
@@ -119,6 +121,7 @@ GEM
     erb (4.0.4)
       cgi (>= 0.3.3)
     erubi (1.13.1)
+    execjs (2.10.0)
     ffi (1.17.2-aarch64-linux-gnu)
     ffi (1.17.2-aarch64-linux-musl)
     ffi (1.17.2-arm-linux-gnu)
@@ -314,6 +317,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  autoprefixer-rails
   bootsnap
   bootstrap (~> 5.3.3)
   capybara
